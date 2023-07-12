@@ -1,0 +1,77 @@
+def countDigit(n):
+  if n < 10:
+    return 1
+  else:
+    return 1 + countDigit(n // 10)
+
+
+def findMax(list1):
+  if len(list1) == 0:
+    return 0
+  elif len(list1) == 1:
+    return list1[0]
+  elif list1[0] > findMax(list1[1:]):
+    return list1[0]
+  else:
+    return findMax(list1[1:])
+
+
+def countTag(code, tag):
+  if tag not in code:
+    return 0
+
+  openedTag = "<" + tag + ">"
+  closedTag = "</" + tag + ">"
+
+  start_index = code.find(openedTag)
+
+  if start_index == -1:
+    return 0
+
+  end_index = code.find(closedTag, start_index)
+
+  if end_index == -1:
+    return 0
+
+  return 1 + countTag(code[end_index + len(closedTag):], tag)
+
+
+while (True):
+  print("Press your choice: ")
+  print("1. Count Digits: ")
+  print("2. Find Max: ")
+  print("3. Count Tags: ")
+  print("4. Exit: ")
+  print("------------------------")
+  choice = input("Enter a Choice: ")
+
+  if choice == "1":
+    number = countDigit(int(input("Enter an integer: ")))
+    print("Number of digits:", number)
+  elif choice == "2":
+    mylist = eval(input("enter a list of number: "))
+    maxi = findMax(mylist)
+    print("the maximum is: ", maxi)
+  elif choice == "3":
+    code = """
+        <html>
+        <head>
+        <title>My Website</title>
+        </head>
+        <body>
+        <h1>Welcome to my website!</h1>
+        <p>Here you'll find information about me and my hobbies.</p>
+        <h2>Hobbies</h2>
+        <ul>
+        <li>Playing guitar</li>
+        <li>Reading books</li>
+        <li>Traveling</li>
+        <li>Writing cool h1 tags</li>
+        </ul>
+        </body>
+        </html>
+        """
+    tag = input("enter the  tag: ")
+    print(countTag(code, tag))
+  elif choice == "4":
+    break
